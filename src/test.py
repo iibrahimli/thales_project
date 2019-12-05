@@ -10,6 +10,9 @@ from sim import *
 from util import *
 
 
+TEST_NAME_PAD_WIDTH = 32
+
+
 def check_result(name, expected, calculated):
     """
     This function compares the result of a function to
@@ -24,10 +27,10 @@ def check_result(name, expected, calculated):
     """
 
     def print_test_failed():
-        print(col.BOLD + f"{name}" + " -" + col.FAIL + " Test Failed" + col.ENDC, end="\n    ")
+        print(col.BOLD + f"{name:{TEST_NAME_PAD_WIDTH}}" + " - " + col.FAIL + "Test Failed" + col.ENDC, end="\n    ")
     
     def print_test_passed():
-        print(col.BOLD + f"{name}" + " -" + col.OKGREEN + " Test Passed" + col.ENDC, end="\n")
+        print(col.BOLD + f"{name:{TEST_NAME_PAD_WIDTH}}" + " - " + col.OKGREEN + "Test Passed" + col.ENDC, end="\n")
 
     if type(expected) != type(calculated):
         print_test_failed()
@@ -52,13 +55,40 @@ def check_result(name, expected, calculated):
 ======================================================
 """
 
-# CPU
+
+# CPU module tests
+
+print(col.BOLD + col.HEADER + "CPU tests".center(TEST_NAME_PAD_WIDTH) + col.ENDC)
+print(col.BOLD + col.HEADER + "="*TEST_NAME_PAD_WIDTH + col.ENDC)
+print()
+
+proc = cpu()
+
+proc.set_elem_state(SIGNAL, 'A1_4', GREEN)
+check_result("CPU set uninitialized element", GREEN, proc.elements[SIGNAL]['A1_4'])
+
+proc._reset()
+proc.set_elem_state(SIGNAL, 'A1_4', RED)
+proc.set_elem_state(SIGNAL, 'A1_4', GREEN)
+check_result("CPU set initialized element", GREEN, proc.elements[SIGNAL]['A1_4'])
+
+proc._reset()
+check_result("CPU get uninitialized element", None, proc.get_elem_state(SIGNAL, 'A1_4'))
+
+proc._reset()
+proc.set_elem_state(SIGNAL, 'A1_4', GREEN)
+check_result("CPU get initialized element", GREEN, proc.get_elem_state(SIGNAL, 'A1_4'))
+
+proc._reset()
+proc.set_elem_state(SIGNAL, 'A1_4', RED)
+proc._reset()
+check_result("CPU reset", None, proc.get_elem_state(SIGNAL, 'A1_4'))
+
+proc._reset()
+m = message(SWITCHPOINT, 'Z3_1', PLUS)
+proc.recv_message(m)
+check_result("CPU receive message", PLUS, proc.get_elem_state(SWITCHPOINT, 'Z3_1'))
 
 
 
-# SIM
-
-
-check_result("Sample 1", 20.1, 1)
-check_result("Sample 2", 120, 120)
-check_result("Sample 3", 20.1, 10.1)
+# Simulator module tests
