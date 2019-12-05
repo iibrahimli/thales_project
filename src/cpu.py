@@ -18,6 +18,23 @@ class cpu:
     """
 
     def __init__(self):
+        """
+        Initializes empty dicts
+        
+        """
+        
+        self.elements = {
+            0: {},  # signals
+            1: {}   # switchpoints
+        }
+
+    
+    def _reset(self):
+        """
+        Resets the state of the CPU
+        
+        """
+
         self.elements = {
             0: {},  # signals
             1: {}   # switchpoints
@@ -40,13 +57,26 @@ class cpu:
         return self.elements[e_type].get(elem, None)
 
 
+    def set_elem_state(self, e_type, elem, e_state):
+        """
+        Get the state of a given element
+
+        Arguments:
+            e_type (int)  : Element type
+            elem (str)    : Element name
+
+        """
+
+        self.elements[e_type][elem] = e_state
+
+
     def recv_message(self, m: message):
         """
-        Receive and parse message
+        Receive and parse a message
 
         Arguments:
             m (message) : The message
 
         """
 
-        self.elements[m.e_type][m.elem] = m.e_state
+        self.set_elem_state(m.e_type, m.elem, m.e_state)
