@@ -32,7 +32,7 @@ class cpu:
     def _reset(self):
         """
         Resets the state of the CPU
-        
+
         """
 
         self.elements = {
@@ -64,13 +64,14 @@ class cpu:
         Arguments:
             e_type (int)  : Element type
             elem (str)    : Element name
+            e_state (int) : Element state
 
         """
 
         self.elements[e_type][elem] = e_state
 
 
-    def recv_message(self, m: message):
+    def recv_message(self, m):
         """
         Receive and parse a message
 
@@ -80,3 +81,20 @@ class cpu:
         """
 
         self.set_elem_state(m.e_type, m.elem, m.e_state)
+    
+
+    def check_safety(self, e_type, elem, e_state):
+        """
+        Check the safety of an operation
+
+        Arguments:
+            e_type (int)  : Element type
+            elem (str)    : Element name
+            e_state (int) : Element state
+
+        Returns:
+            safe (bool) : True if the operation is safe, False otherwise    
+
+        """
+
+        return False
