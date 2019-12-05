@@ -31,18 +31,32 @@ def check_result(name, expected, calculated):
 
     if type(expected) != type(calculated):
         print_test_failed()
-        print(f"Type mismatch: {type(expected)} != {type(calculated)}")
+        print(col.UNDERLINE + f"Type mismatch:" + col.ENDC + f" {type(expected)} != {type(calculated)}")
         print()
         return
     
     if expected != calculated:
         print_test_failed()
-        print(f"Value mismatch: {expected} != {calculated}")
+        print(col.UNDERLINE + f"Value mismatch:" + col.ENDC + f" {expected} != {calculated}")
         print()
         return
     
     print_test_passed()
     print()
+
+
+
+"""
+======================================================
+             Start of the testing section             
+======================================================
+"""
+
+# CPU
+
+
+
+# SIM
 
 
 check_result("Sample 1", 20.1, 1)
