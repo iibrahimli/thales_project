@@ -49,7 +49,7 @@ def check_result(name, expected, calculated):
 
     if type(expected) != type(calculated):
         print_test_failed()
-        print(col.UNDERLINE + f"Type mismatch:" + col.ENDC + f" {type(expected)} != {type(calculated)} (line {lineno()})")
+        print(col.UNDERLINE + f"Type mismatch:" + col.ENDC + f" {type(expected).__name__} != {type(calculated).__name__} (line {lineno()})")
         print()
         return
     
@@ -121,8 +121,11 @@ print()
 
 sml = simulator()
 
-check_result("SIM sample check", 1, 1)
+check_result("SIM sample check 1", 1, 1)
 
+check_result("SIM sample check 2", 2, "2")
+
+check_result("SIM sample check 3", 3, 3)
 
 
 # print stats
