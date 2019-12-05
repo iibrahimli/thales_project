@@ -4,6 +4,8 @@ for the modules. If a module fails to pass a test
 
 """
 
+import inspect
+
 from cpu import *
 from simulator import *
 from util import *
@@ -13,6 +15,13 @@ TEST_NAME_PAD_WIDTH = 50
 
 n_tests = 0
 n_passed = 0
+
+
+def lineno():
+    """
+    Returns the current line number
+    """
+    return inspect.currentframe().f_back.f_back.f_lineno
 
 
 def check_result(name, expected, calculated):
@@ -40,13 +49,13 @@ def check_result(name, expected, calculated):
 
     if type(expected) != type(calculated):
         print_test_failed()
-        print(col.UNDERLINE + f"Type mismatch:" + col.ENDC + f" {type(expected)} != {type(calculated)}")
+        print(col.UNDERLINE + f"Type mismatch:" + col.ENDC + f" {type(expected)} != {type(calculated)} (line {lineno()})")
         print()
         return
     
     if expected != calculated:
         print_test_failed()
-        print(col.UNDERLINE + f"Value mismatch:" + col.ENDC + f" {expected} != {calculated}")
+        print(col.UNDERLINE + f"Value mismatch:" + col.ENDC + f" {expected} != {calculated} (line {lineno()})")
         print()
         return
     
@@ -112,12 +121,15 @@ print()
 
 sml = simulator()
 
-sml
+check_result("SIM sample check", 1, 1)
+
+
 
 # print stats
 
 print(col.BOLD + col.OKBLUE + "Stats".center(TEST_NAME_PAD_WIDTH))
 print(col.BOLD + col.OKBLUE + "="*TEST_NAME_PAD_WIDTH + col.ENDC)
+print()
 print(col.BOLD +     "Total tests: " + col.ENDC + f"{n_tests}".rjust(TEST_NAME_PAD_WIDTH-13))
 if n_passed == n_tests:
     print(col.BOLD + "Failed tests:" + col.ENDC + col.OKGREEN + f"{n_tests - n_passed} ({(n_tests - n_passed) / n_tests * 100:.1f} %)".rjust(TEST_NAME_PAD_WIDTH-13) + col.ENDC)
