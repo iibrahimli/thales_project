@@ -19,7 +19,7 @@ class message:
 
     """
 
-    def __init__(self, e_type: int, elem: str, e_state: int, sender: str = None):
+    def __init__(self, e_type, elem, e_state, sender=None):
         self.e_type = e_type
         self.elem = elem
         self.e_state = e_state
