@@ -4,6 +4,8 @@ color printing, etc
 
 """
 
+# debug mode
+DEBUG = True
 
 class col:
     HEADER    = '\033[95m'
@@ -16,7 +18,14 @@ class col:
     UNDERLINE = '\033[4m'
 
 
-SIGNAL_RED        = 0
-SIGNAL_GREEN      = 1
-SWITCHPOINT_PLUS  = 2
-SWITCHPOINT_MINUS = 3
+# the type of the field element
+SIGNAL        = 0
+SWITCHPOINT   = 1
+
+# state
+MINUS    = 0
+PLUS     = 1
+
+# state
+RED      = 0
+GREEN    = 1
