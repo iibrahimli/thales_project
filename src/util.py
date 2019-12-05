@@ -14,3 +14,9 @@ class col:
     ENDC      = '\033[0m'
     BOLD      = '\033[1m'
     UNDERLINE = '\033[4m'
+
+
+SIGNAL_RED        = 0
+SIGNAL_GREEN      = 1
+SWITCHPOINT_PLUS  = 2
+SWITCHPOINT_MINUS = 3
