@@ -5,12 +5,14 @@ for the modules. If a module fails to pass a test
 """
 
 from cpu import *
-from gui import *
-from sim import *
+from simulator import *
 from util import *
 
 
-TEST_NAME_PAD_WIDTH = 32
+TEST_NAME_PAD_WIDTH = 50
+
+n_tests = 0
+n_passed = 0
 
 
 def check_result(name, expected, calculated):
@@ -25,6 +27,10 @@ def check_result(name, expected, calculated):
         calculated : Calculated result
 
     """
+
+    global n_tests, n_passed
+
+    n_tests += 1
 
     def print_test_failed():
         print(col.BOLD + f"{name:{TEST_NAME_PAD_WIDTH}}" + " - " + col.FAIL + "Test Failed" + col.ENDC, end="\n    ")
@@ -46,6 +52,7 @@ def check_result(name, expected, calculated):
     
     print_test_passed()
     print()
+    n_passed += 1
 
 
 
@@ -89,6 +96,30 @@ m = message(SWITCHPOINT, 'Z3_1', PLUS)
 proc.recv_message(m)
 check_result("CPU receive message", PLUS, proc.get_elem_state(SWITCHPOINT, 'Z3_1'))
 
+proc._reset()
+check_result("CPU check safety of a safe operation", True, proc.check_safety(SWITCHPOINT, 'Z3_1', RED))
+
+proc._reset()
+check_result("CPU check safety of a dangerous operation", False, proc.check_safety(SWITCHPOINT, 'Z3_1', RED))
 
 
-# Simulator module tests
+# SIM module tests
+
+print()
+print(col.BOLD + col.HEADER + "SIM tests".center(TEST_NAME_PAD_WIDTH) + col.ENDC)
+print(col.BOLD + col.HEADER + "="*TEST_NAME_PAD_WIDTH + col.ENDC)
+print()
+
+sml = simulator()
+
+sml
+
+# print stats
+
+print(col.BOLD + col.OKBLUE + "Stats".center(TEST_NAME_PAD_WIDTH))
+print(col.BOLD + col.OKBLUE + "="*TEST_NAME_PAD_WIDTH + col.ENDC)
+print(col.BOLD +     "Total tests: " + col.ENDC + f"{n_tests}".rjust(TEST_NAME_PAD_WIDTH-13))
+if n_passed == n_tests:
+    print(col.BOLD + "Failed tests:" + col.ENDC + col.OKGREEN + f"{n_tests - n_passed} ({(n_tests - n_passed) / n_tests * 100:.1f} %)".rjust(TEST_NAME_PAD_WIDTH-13) + col.ENDC)
+else:
+    print(col.BOLD + "Failed tests:" + col.ENDC + col.FAIL + f"{n_tests - n_passed} ({(n_tests - n_passed) / n_tests * 100:.1f} %)".rjust(TEST_NAME_PAD_WIDTH-13) + col.ENDC)
