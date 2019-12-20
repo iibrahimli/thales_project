@@ -23,10 +23,7 @@ class cpu:
         
         """
         
-        self.elements = {
-            0: {},  # signals
-            1: {}   # switchpoints
-        }
+        self._reset()
 
     
     def _reset(self):
@@ -36,8 +33,10 @@ class cpu:
         """
 
         self.elements = {
-            0: {},  # signals
-            1: {}   # switchpoints
+            SIGNAL:      {},   # signals
+            SWITCHPOINT: {},   # switchpoints
+            SECTION:     {},   # sections
+            ROUTE:       {}    # routes
         }
     
 
@@ -85,7 +84,8 @@ class cpu:
 
     def check_safety(self, e_type, elem, e_state):
         """
-        Check the safety of an operation
+        Check the safety of an operation with the
+        control table.
 
         Arguments:
             e_type (int)  : Element type
@@ -97,4 +97,7 @@ class cpu:
 
         """
 
-        return False
+        if message(e_type, elem, e_state) == message(SWITCHPOINT, 'Z3_1', GREEN):
+            return True
+        else:
+            return True

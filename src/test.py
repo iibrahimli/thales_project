@@ -58,7 +58,7 @@ def check_result(name, expected, calculated):
         print(col.UNDERLINE + f"Value mismatch:" + col.ENDC + f" {expected} != {calculated} (line {lineno()})")
         print()
         return
-    
+
     print_test_passed()
     print()
     n_passed += 1
@@ -105,11 +105,28 @@ m = message(SWITCHPOINT, 'Z3_1', PLUS)
 proc.recv_message(m)
 check_result("CPU receive message", PLUS, proc.get_elem_state(SWITCHPOINT, 'Z3_1'))
 
+m1 = message(SWITCHPOINT, 'Z3_1', PLUS)
+m2 = message(SWITCHPOINT, 'Z3_1', PLUS)
+m3 = message(SWITCHPOINT, 'Z2_1', PLUS)
+check_result("CPU message equal", True, m1 == m2)
+check_result("CPU message not equal", False, m1 == m3)
+
+proc._reset()
+proc.set_elem_state(ROUTE, 'A1-A3', OCCUPIED)
+check_result("CPU set route state", OCCUPIED, proc.elements[ROUTE]['A1-A3'])
+
+proc._reset()
+check_result("CPU get uninitialized route state", None, proc.get_elem_state(ROUTE, 'A1-A3'))
+
+proc._reset()
+proc.set_elem_state(ROUTE, 'A1-A3', UNOCCUPIED)
+check_result("CPU get initialized route state", UNOCCUPIED, proc.get_elem_state(ROUTE, 'A1-A3'))
+
 proc._reset()
 check_result("CPU check safety of a safe operation", True, proc.check_safety(SWITCHPOINT, 'Z3_1', RED))
 
 proc._reset()
-check_result("CPU check safety of a dangerous operation", False, proc.check_safety(SWITCHPOINT, 'Z3_1', RED))
+check_result("CPU check safety of a dangerous operation", False, proc.check_safety(SWITCHPOINT, 'Z3_1', GREEN))
 
 
 # SIM module tests

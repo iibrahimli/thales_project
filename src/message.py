@@ -13,7 +13,7 @@ class message:
 
     Attributes:
         e_type (int)   : Element type
-        elem (str)     : Subject that will be acted upon
+        elem (str)     : Element that will be acted upon
         e_state (int)  : Element state
         sender (str)   : Sender name
 
@@ -24,3 +24,12 @@ class message:
         self.elem = elem
         self.e_state = e_state
         self.sender = sender
+    
+
+    def __eq__(self, other):
+        if self.e_type  == other.e_type  and \
+           self.elem    == other.elem    and \
+           self.e_state == other.e_state:
+            return True
+        else:
+            return False
