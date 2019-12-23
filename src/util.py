@@ -18,14 +18,24 @@ class col:
     UNDERLINE = '\033[4m'
 
 
-# the type of the field element
-SIGNAL        = 0
-SWITCHPOINT   = 1
+# the type of the element
+SIGNAL      = 0
+SWITCHPOINT = 1
+SECTION     = 2
+ROUTE       = 3   # not really an element, just for convenience
 
-# state
-MINUS    = 0
-PLUS     = 1
+# state of switchpoint
+MINUS = 0
+PLUS  = 1
 
-# state
-RED      = 0
-GREEN    = 1
+# state of signal
+RED   = 0
+GREEN = 1
+
+# state of sections
+OCCUPIED   = 0
+UNOCCUPIED = 1
+
+# state of route
+UNSET = 0
+SET   = 1
