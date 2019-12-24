@@ -84,20 +84,49 @@ class cpu:
 
     def check_safety(self, e_type, elem, e_state):
         """
-        Check the safety of an operation with the
-        control table.
+    	Check the safety of an operation with the
+    	control table.
 
-        Arguments:
+    	Arguments:
             e_type (int)  : Element type
             elem (str)    : Element name
             e_state (int) : Element state
 
         Returns:
-            safe (bool) : True if the operation is safe, False otherwise    
+            safe (bool) : True if the operation is safe, False otherwise
 
         """
-
-        if message(e_type, elem, e_state) == message(SWITCHPOINT, 'Z3_1', GREEN):
+        if message(e_type, elem, e_state) == message(SWITCHPOINT, 'Z3_1', GREEN): # TODO
             return True
         else:
+            return False
+
+        if message(e_type, elem, e_state) == message(SIGNAL, 'A1_3', GREEN):
             return True
+        else:
+            return False
+
+        if message(e_type, elem, e_state) == message(SIGNAL, 'A2_3', GREEN):
+            return True
+        else:
+            return False
+
+        if message(e_type, elem, e_state) == message(SIGNAL, 'A2_4', GREEN):
+            return True
+        else:
+            return False
+
+        if message(e_type, elem, e_state) == message(SIGNAL, 'E1_z2', GREEN):
+            return True
+        else:
+            return False
+
+        if message(e_type, elem, e_state) == message(SIGNAL, 'E1_z1', GREEN):
+            return True
+        else:
+            return False
+
+        if message(e_type, elem, e_state) == message(SIGNAL, 'E2_z2', GREEN):
+            return True
+        else:
+            return False
