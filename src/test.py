@@ -95,7 +95,7 @@ proc._reset()
 proc.set_elem_state(SIGNAL, 'A1_4', GREEN)
 check_result("CPU get initialized element", GREEN, proc.get_elem_state(SIGNAL, 'A1_4'))
 
-proc._reset()
+proc._reset()	
 proc.set_elem_state(SIGNAL, 'A1_4', RED)
 proc._reset()
 check_result("CPU reset", None, proc.get_elem_state(SIGNAL, 'A1_4'))
