@@ -24,6 +24,10 @@ class cpu:
         """
         
         self._reset()
+        self.elements[SIGNAL]['2a']=""
+        self.elements[SIGNAL]['1a']=""
+        self.elements[SIGNAL]['1']=""
+        self.elements[SIGNAL]['2']=""
 
     
     def _reset(self):
@@ -96,37 +100,59 @@ class cpu:
             safe (bool) : True if the operation is safe, False otherwise
 
         """
-        if message(e_type, elem, e_state) == message(SWITCHPOINT, 'Z3_1', GREEN): # TODO
-            return True
-        else:
+        # checking signal safety
+        if message(e_type, elem, e_state) == message(SIGNAL, 'A1_3', GREEN)  or \
+           message(e_type, elem, e_state) == message(SIGNAL, 'A2_3', GREEN)  or \
+		   message(e_type, elem, e_state) == message(SIGNAL, 'A2_4', GREEN)  or \
+           message(e_type, elem, e_state) == message(SIGNAL, 'E1_z2', GREEN) or \
+           message(e_type, elem, e_state) == message(SIGNAL, 'E1_z1', GREEN) or \
+	       message(e_type, elem, e_state) == message(SIGNAL, 'E2_z2', GREEN):
+        	return True
+
+        # checking route safety
+        elif message(e_type, elem, e_state) == message(ROUTE, 'A1 A3', SET):
+           l=elem.split(' ')
+           print(l)
+           if self.elements[SIGNAL]['1a'] == PLUS:
+           	return True
+       	   else:
+            return False
+        elif message(e_type, elem, e_state) == message(ROUTE, 'A2 A3', SET):
+           l=elem.split(' ')
+           print(l)
+           if self.elements[SIGNAL]['2a'] == PLUS and self.elements[SIGNAL]['1a'] == MINUS:
+           	return True
+       	   else:
+            return False
+        elif message(e_type, elem, e_state) == message(ROUTE, 'A2 A4', SET):
+           l=elem.split(' ')
+           print(l)
+           if self.elements[SIGNAL]['2a'] == PLUS:
+           	return True
+       	   else:
+            return False
+        elif message(e_type, elem, e_state) == message(ROUTE, 'E1 z2', SET):
+           l=elem.split(' ')
+           print(l)
+           if self.elements[SIGNAL]['1'] == PLUS and self.elements[SIGNAL]['1a'] == MINUS and self.elements[SIGNAL]['2a'] == MINUS:
+           	return True
+       	   else:
+            return False
+        elif message(e_type, elem, e_state) == message(ROUTE, 'E1 z1', SET):
+           l=elem.split(' ')
+           print(l)
+           if self.elements[SIGNAL]['1'] == PLUS and self.elements[SIGNAL]['1a'] == PLUS:
+           	return True
+       	   else:
+            return False
+        elif message(e_type, elem, e_state) == message(ROUTE, 'E2 z2', SET):
+           l=elem.split(' ')
+           print(l)
+           if self.elements[SIGNAL]['2a'] == PLUS:
+           	return True
+       	   else:
             return False
 
-        if message(e_type, elem, e_state) == message(SIGNAL, 'A1_3', GREEN):
-            return True
-        else:
-            return False
-
-        if message(e_type, elem, e_state) == message(SIGNAL, 'A2_3', GREEN):
-            return True
-        else:
-            return False
-
-        if message(e_type, elem, e_state) == message(SIGNAL, 'A2_4', GREEN):
-            return True
-        else:
-            return False
-
-        if message(e_type, elem, e_state) == message(SIGNAL, 'E1_z2', GREEN):
-            return True
-        else:
-            return False
-
-        if message(e_type, elem, e_state) == message(SIGNAL, 'E1_z1', GREEN):
-            return True
-        else:
-            return False
-
-        if message(e_type, elem, e_state) == message(SIGNAL, 'E2_z2', GREEN):
-            return True
+        # nothing above matched
         else:
             return False
