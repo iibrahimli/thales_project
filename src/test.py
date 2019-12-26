@@ -123,26 +123,10 @@ proc.set_elem_state(ROUTE, 'A1-A3', UNOCCUPIED)
 check_result("CPU get initialized route state", UNOCCUPIED, proc.get_elem_state(ROUTE, 'A1-A3'))
 
 proc._reset()
-check_result("CPU check safety of a safe operation", True, proc.check_safety(SWITCHPOINT, 'Z3_1', RED))
+check_result("CPU check safety of a safe operation", True, proc.check_safety(SWITCHPOINT, '1', PLUS))
 
 proc._reset()
-check_result("CPU check safety of a dangerous operation", False, proc.check_safety(SWITCHPOINT, 'Z3_1', GREEN))
-
-
-# SIM module tests
-
-print()
-print(col.BOLD + col.HEADER + "SIM tests".center(TEST_NAME_PAD_WIDTH) + col.ENDC)
-print(col.BOLD + col.HEADER + "="*TEST_NAME_PAD_WIDTH + col.ENDC)
-print()
-
-sml = simulator()
-
-check_result("SIM sample check 1", 1, 1)
-
-check_result("SIM sample check 2", 2, "2")
-
-check_result("SIM sample check 3", 3, 3)
+check_result("CPU check safety of a dangerous operation", False, proc.check_safety(SWITCHPOINT, '2', MINUS))
 
 
 # print stats

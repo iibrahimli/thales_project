@@ -72,6 +72,9 @@ class cpu:
         """
 
         self.elements[e_type][elem] = e_state
+        if e_type == ROUTE:
+            # TODO
+            pass
 
 
     def recv_message(self, m):
