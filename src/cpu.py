@@ -28,6 +28,7 @@ class cpu:
         self.elements[SWITCHPOINT]['1a']=""
         self.elements[SWITCHPOINT]['1']=""
         self.elements[SWITCHPOINT]['2']=""
+        self.current_route = ""
 
     
     def _reset(self):
@@ -42,6 +43,7 @@ class cpu:
             SECTION:     {},   # sections
             ROUTE:       {}    # routes
         }
+        self.current_route = ""
     
 
     def get_elem_state(self, e_type, elem):
@@ -72,6 +74,11 @@ class cpu:
         """
 
         self.elements[e_type][elem] = e_state
+        if e_type == ROUTE:
+            if e_state == SET:
+                self.current_route = elem
+            else:
+                self.current_route = ""
 
 
     def recv_message(self, m):

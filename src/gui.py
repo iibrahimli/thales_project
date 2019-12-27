@@ -4,7 +4,7 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 
 from util import *
-import message
+from message import message
 import cpu
 
 
@@ -37,9 +37,14 @@ routes_desc_w = canvas.create_window(900, HEIGHT-160, anchor=tk.NE, window=route
 route_entry = tk.Entry(root, width=51)
 route_entry_w = canvas.create_window(WIDTH-20, HEIGHT-120, anchor=tk.NE, window=route_entry)
 
+cur_route_l = tk.Label(root, text="Current route: NONE")
+cur_route_w = canvas.create_window(1100, HEIGHT-160, anchor=tk.NE, window=cur_route_l)
+
 def set_route_clicked():
     route = route_entry.get()
     print(f"set route <{route}>")
+    if not route:
+        return
     if len(route.split()) != 2:
         messagebox.showerror("Failure", f"Invalid route <{route}>")
     else:
@@ -48,13 +53,16 @@ def set_route_clicked():
         if not safe:
             messagebox.showerror("Failure", f"Route <{route}> failed safety check")
         else:
-            proc.recv_message(messagebox(ROUTE, route, SET))
+            proc.recv_message(message(ROUTE, route, SET))
+            cur_route_l.config(text=f"Current route: {proc.current_route}")
 
 set_route_b = tk.Button(root, text="Set Route", command=set_route_clicked, width=22, height=1)
 set_route_w = canvas.create_window(WIDTH-20, HEIGHT-70, anchor=tk.NE, window=set_route_b)
 
 def clear_route_clicked():
     route_entry.delete(0, tk.END)
+    proc.recv_message(message(ROUTE, proc.current_route, UNSET))
+    cur_route_l.config(text=f"Current route: NONE")
 
 clear_route_b = tk.Button(root, text="Clear Route", command=clear_route_clicked, width=22, height=1)
 clear_route_w = canvas.create_window(WIDTH-234, HEIGHT-70, anchor=tk.NE, window=clear_route_b)
