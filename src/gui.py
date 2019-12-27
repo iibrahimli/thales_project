@@ -45,7 +45,7 @@ def set_route_clicked():
     print(f"set route <{route}>")
     if not route:
         return
-    if len(route.split()) != 2:
+    if len(route.split()) != 2 or route not in proc.elements[ROUTE]:
         messagebox.showerror("Failure", f"Invalid route <{route}>")
     else:
         safe = proc.check_safety(ROUTE, route, SET)
