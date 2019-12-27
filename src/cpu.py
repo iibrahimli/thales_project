@@ -33,12 +33,12 @@ class cpu:
         self.current_route = ""
 
         # signals
-        self.elements[SIGNAL]['A1_3']=""
-        self.elements[SIGNAL]['A2_3']=""
-        self.elements[SIGNAL]['A2_4']=""
-        self.elements[SIGNAL]['E1_z2']=""
-        self.elements[SIGNAL]['E1_z1']=""
-        self.elements[SIGNAL]['E2_z2']=""
+        self.elements[SIGNAL]['A1']=""
+        self.elements[SIGNAL]['A2']=""
+        self.elements[SIGNAL]['A3']=""
+        self.elements[SIGNAL]['A4']=""
+        self.elements[SIGNAL]['E1']=""
+        self.elements[SIGNAL]['E2']=""
 
         #routes
         self.elements[ROUTE]['A1 A3']=""
@@ -126,12 +126,12 @@ class cpu:
 
         """
         # checking signal safety
-        if message(e_type, elem, e_state) == message(SIGNAL, 'A1_3', GREEN)  or \
-           message(e_type, elem, e_state) == message(SIGNAL, 'A2_3', GREEN)  or \
-           message(e_type, elem, e_state) == message(SIGNAL, 'A2_4', GREEN)  or \
-           message(e_type, elem, e_state) == message(SIGNAL, 'E1_z2', GREEN) or \
-           message(e_type, elem, e_state) == message(SIGNAL, 'E1_z1', GREEN) or \
-           message(e_type, elem, e_state) == message(SIGNAL, 'E2_z2', GREEN):
+        if message(e_type, elem, e_state) == message(SIGNAL, 'A1', GREEN)  or \
+           message(e_type, elem, e_state) == message(SIGNAL, 'A2', GREEN)  or \
+           message(e_type, elem, e_state) == message(SIGNAL, 'A3', GREEN)  or \
+           message(e_type, elem, e_state) == message(SIGNAL, 'A4', GREEN) or \
+           message(e_type, elem, e_state) == message(SIGNAL, 'E1', GREEN) or \
+           message(e_type, elem, e_state) == message(SIGNAL, 'E2', GREEN):
             return True
 
         # checking route safety
