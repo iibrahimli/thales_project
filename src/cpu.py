@@ -67,7 +67,7 @@ class cpu:
     def get_elem_state(self, e_type, elem):
         """
         Get the state of a given element
-
+        self.current_route = ""
         Arguments:
             e_type (int)  : Element type
             elem (str)    : Element name
