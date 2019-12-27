@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 
@@ -43,6 +44,7 @@ def set_route_clicked():
         messagebox.showerror("Failure", f"Invalid route <{route}>")
     else:
         safe = proc.check_safety(ROUTE, route, SET)
+        print(route, "is safe:", safe)
         if not safe:
             messagebox.showerror("Failure", f"Route <{route}> failed safety check")
         else:
@@ -56,6 +58,12 @@ def clear_route_clicked():
 
 clear_route_b = tk.Button(root, text="Clear Route", command=clear_route_clicked, width=22, height=1)
 clear_route_w = canvas.create_window(WIDTH-234, HEIGHT-70, anchor=tk.NE, window=clear_route_b)
+
+
+# "simulator"
+
+sim_desc_l = tk.Label(root, text="Simulator module")
+sim_desc_w = canvas.create_window(20, 200, anchor=tk.NW, window=sim_desc_l)
 
 sp_1_plus  = tk.IntVar()
 sp_1_minus = tk.IntVar()
