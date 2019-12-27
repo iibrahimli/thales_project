@@ -7,7 +7,7 @@ for the modules. If a module fails to pass a test
 import inspect
 
 from cpu import *
-from simulator import *
+#from simulator import *
 from util import *
 
 
@@ -80,47 +80,47 @@ print()
 
 proc = cpu()
 
-proc.set_elem_state(SIGNAL, 'A1_4', GREEN)
-check_result("CPU set uninitialized element", GREEN, proc.elements[SIGNAL]['A1_4'])
+proc.set_elem_state(SIGNAL, 'A1', GREEN)
+check_result("CPU set uninitialized element", GREEN, proc.elements[SIGNAL]['A1'])
 
 proc._reset()
-proc.set_elem_state(SIGNAL, 'A1_4', RED)
-proc.set_elem_state(SIGNAL, 'A1_4', GREEN)
-check_result("CPU set initialized element", GREEN, proc.elements[SIGNAL]['A1_4'])
+proc.set_elem_state(SIGNAL, 'A1', RED)
+proc.set_elem_state(SIGNAL, 'A1', GREEN)
+check_result("CPU set initialized element", GREEN, proc.elements[SIGNAL]['A1'])
 
 proc._reset()
-check_result("CPU get uninitialized element", None, proc.get_elem_state(SIGNAL, 'A1_4'))
+check_result("CPU get uninitialized element", None, proc.get_elem_state(SIGNAL, 'A1'))
 
 proc._reset()
-proc.set_elem_state(SIGNAL, 'A1_4', GREEN)
-check_result("CPU get initialized element", GREEN, proc.get_elem_state(SIGNAL, 'A1_4'))
+proc.set_elem_state(SIGNAL, 'A1', GREEN)
+check_result("CPU get initialized element", GREEN, proc.get_elem_state(SIGNAL, 'A1'))
 
 proc._reset()	
-proc.set_elem_state(SIGNAL, 'A1_4', RED)
+proc.set_elem_state(SIGNAL, 'A1', RED)
 proc._reset()
-check_result("CPU reset", None, proc.get_elem_state(SIGNAL, 'A1_4'))
+check_result("CPU reset", None, proc.get_elem_state(SIGNAL, 'A1'))
 
 proc._reset()
-m = message(SWITCHPOINT, 'Z3_1', PLUS)
+m = message(SWITCHPOINT, '2a', PLUS)
 proc.recv_message(m)
-check_result("CPU receive message", PLUS, proc.get_elem_state(SWITCHPOINT, 'Z3_1'))
+check_result("CPU receive message", PLUS, proc.get_elem_state(SWITCHPOINT, '2a'))
 
-m1 = message(SWITCHPOINT, 'Z3_1', PLUS)
-m2 = message(SWITCHPOINT, 'Z3_1', PLUS)
-m3 = message(SWITCHPOINT, 'Z2_1', PLUS)
+m1 = message(SWITCHPOINT, '2a', PLUS)
+m2 = message(SWITCHPOINT, '2a', PLUS)
+m3 = message(SWITCHPOINT, '1a', PLUS)
 check_result("CPU message equal", True, m1 == m2)
 check_result("CPU message not equal", False, m1 == m3)
 
 proc._reset()
-proc.set_elem_state(ROUTE, 'A1-A3', OCCUPIED)
-check_result("CPU set route state", OCCUPIED, proc.elements[ROUTE]['A1-A3'])
+proc.set_elem_state(ROUTE, 'A1 A3', OCCUPIED)
+check_result("CPU set route state", OCCUPIED, proc.elements[ROUTE]['A1 A3'])
 
 proc._reset()
-check_result("CPU get uninitialized route state", None, proc.get_elem_state(ROUTE, 'A1-A3'))
+check_result("CPU get uninitialized route state", None, proc.get_elem_state(ROUTE, 'A1 A3'))
 
 proc._reset()
-proc.set_elem_state(ROUTE, 'A1-A3', UNOCCUPIED)
-check_result("CPU get initialized route state", UNOCCUPIED, proc.get_elem_state(ROUTE, 'A1-A3'))
+proc.set_elem_state(ROUTE, 'A1 A3', UNOCCUPIED)
+check_result("CPU get initialized route state", UNOCCUPIED, proc.get_elem_state(ROUTE, 'A1 A3'))
 
 proc._reset()
 check_result("CPU check safety of a safe operation", True, proc.check_safety(SWITCHPOINT, '1', PLUS))
