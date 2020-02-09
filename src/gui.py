@@ -21,7 +21,7 @@ proc = cpu.cpu()
 # set up GUI
 
 root = tk.Tk()
-root.title("Alpha")
+root.title("Demo")
 root.geometry(f"{WIDTH}x{HEIGHT}")
 
 canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT)
@@ -39,6 +39,31 @@ route_entry_w = canvas.create_window(WIDTH-20, HEIGHT-120, anchor=tk.NE, window=
 
 cur_route_l = tk.Label(root, text="Current route: NONE")
 cur_route_w = canvas.create_window(1100, HEIGHT-160, anchor=tk.NE, window=cur_route_l)
+
+# set switchpoint indicators
+sp_1_open = ImageTk.PhotoImage(Image.open("sp_open.png").resize((40, 10), Image.ANTIALIAS).transpose(Image.FLIP_LEFT_RIGHT))
+sp_1_close = ImageTk.PhotoImage(Image.open("sp_close.png").resize((40, 10), Image.ANTIALIAS).transpose(Image.FLIP_LEFT_RIGHT))
+
+sp_1a_open = ImageTk.PhotoImage(Image.open("sp_open.png").resize((40, 10), Image.ANTIALIAS))
+sp_1a_close = ImageTk.PhotoImage(Image.open("sp_close.png").resize((40, 10), Image.ANTIALIAS))
+
+sp_2_open = ImageTk.PhotoImage(Image.open("sp_open.png").resize((40, 10), Image.ANTIALIAS).transpose(Image.FLIP_TOP_BOTTOM))
+sp_2_close = ImageTk.PhotoImage(Image.open("sp_close.png").resize((40, 10), Image.ANTIALIAS).transpose(Image.FLIP_TOP_BOTTOM))
+
+sp_2a_open = ImageTk.PhotoImage(Image.open("sp_open.png").resize((40, 10), Image.ANTIALIAS).transpose(Image.FLIP_TOP_BOTTOM).transpose(Image.FLIP_LEFT_RIGHT))
+sp_2a_close = ImageTk.PhotoImage(Image.open("sp_close.png").resize((40, 10), Image.ANTIALIAS).transpose(Image.FLIP_TOP_BOTTOM).transpose(Image.FLIP_LEFT_RIGHT))
+
+sp_1_i_l = tk.Label(root, image=sp_1_open)
+sp_1_i_w = canvas.create_window(485, 128, anchor=tk.NW, window=sp_1_i_l)
+
+sp_1a_i_l = tk.Label(root, image=sp_1a_open)
+sp_1a_i_w = canvas.create_window(375, 128, anchor=tk.NW, window=sp_1a_i_l)
+
+sp_2_i_l = tk.Label(root, image=sp_2_open)
+sp_2_i_w = canvas.create_window(566, 76, anchor=tk.NW, window=sp_2_i_l)
+
+sp_2a_i_l = tk.Label(root, image=sp_2a_open)
+sp_2a_i_w = canvas.create_window(286, 76, anchor=tk.NW, window=sp_2a_i_l)
 
 def set_route_clicked():
     route = route_entry.get()
@@ -88,35 +113,49 @@ sp_2a_minus = tk.IntVar()
 def set_sp_states():
     if sp_1_plus.get() == 1 and sp_1_minus.get() == 0:
         sp_1_state = PLUS
+        sp_1_indicator = sp_1_close
     elif sp_1_plus.get() == 0 and sp_1_minus.get() == 1:
         sp_1_state = MINUS
+        sp_1_indicator = sp_1_open
     else:
         messagebox.showerror("Failure", f"Invalid checkbox state for switchpoint 1")
         return
 
     if sp_2_plus.get() == 1 and sp_2_minus.get() == 0:
         sp_2_state = PLUS
+        sp_2_indicator = sp_2_close
     elif sp_2_plus.get() == 0 and sp_2_minus.get() == 1:
         sp_2_state = MINUS
+        sp_2_indicator = sp_2_open
     else:
         messagebox.showerror("Failure", f"Invalid checkbox state for switchpoint 2")
         return
 
     if sp_1a_plus.get() == 1 and sp_1a_minus.get() == 0:
         sp_1a_state = PLUS
+        sp_1a_indicator = sp_1a_close
     elif sp_1a_plus.get() == 0 and sp_1a_minus.get() == 1:
         sp_1a_state = MINUS
+        sp_1a_indicator = sp_1a_open
     else:
         messagebox.showerror("Failure", f"Invalid checkbox state for switchpoint 1a")
         return
 
     if sp_2a_plus.get() == 1 and sp_2a_minus.get() == 0:
         sp_2a_state = PLUS
+        sp_2a_indicator = sp_2a_close
     elif sp_2a_plus.get() == 0 and sp_2a_minus.get() == 1:
         sp_2a_state = MINUS
+        sp_2a_indicator = sp_2a_open
     else:
         messagebox.showerror("Failure", f"Invalid checkbox state for switchpoint 2a")
         return
+
+    # update switchpoint indicators
+    sp_1_i_l.configure(image=sp_1_indicator)
+    sp_2_i_l.configure(image=sp_2_indicator)
+    sp_1a_i_l.configure(image=sp_1a_indicator)
+    sp_2a_i_l.configure(image=sp_2a_indicator)
 
     proc.set_elem_state(SWITCHPOINT, "1", sp_1_state)
     proc.set_elem_state(SWITCHPOINT, "2", sp_2_state)
