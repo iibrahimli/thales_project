@@ -21,8 +21,8 @@ proc = cpu.cpu()
 # set up GUI
 
 root = tk.Tk()
-root.title("Demo")
-root.geometry(f"{WIDTH}x{HEIGHT}")
+root.title("Alpha")
+root.geometry("{}x{}".format(WIDTH, HEIGHT))
 
 canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT)
 canvas.pack()
@@ -67,19 +67,19 @@ sp_2a_i_w = canvas.create_window(286, 76, anchor=tk.NW, window=sp_2a_i_l)
 
 def set_route_clicked():
     route = route_entry.get()
-    print(f"set route <{route}>")
+    print("set route <{route}>")
     if not route:
         return
     if len(route.split()) != 2 or route not in proc.elements[ROUTE]:
-        messagebox.showerror("Failure", f"Invalid route <{route}>")
+        messagebox.showerror("Failure", "Invalid route <{route}>")
     else:
         safe = proc.check_safety(ROUTE, route, SET)
         print(route, "is safe:", safe)
         if not safe:
-            messagebox.showerror("Failure", f"Route <{route}> failed safety check")
+            messagebox.showerror("Failure", "Route <{route}> failed safety check")
         else:
             proc.recv_message(message(ROUTE, route, SET))
-            cur_route_l.config(text=f"Current route: {proc.current_route}")
+            cur_route_l.config(text="Current route: {proc.current_route}")
 
 set_route_b = tk.Button(root, text="Set Route", command=set_route_clicked, width=22, height=1)
 set_route_w = canvas.create_window(WIDTH-20, HEIGHT-70, anchor=tk.NE, window=set_route_b)
@@ -87,7 +87,7 @@ set_route_w = canvas.create_window(WIDTH-20, HEIGHT-70, anchor=tk.NE, window=set
 def clear_route_clicked():
     route_entry.delete(0, tk.END)
     proc.recv_message(message(ROUTE, proc.current_route, UNSET))
-    cur_route_l.config(text=f"Current route: NONE")
+    cur_route_l.config(text="Current route: NONE")
 
 clear_route_b = tk.Button(root, text="Clear Route", command=clear_route_clicked, width=22, height=1)
 clear_route_w = canvas.create_window(WIDTH-234, HEIGHT-70, anchor=tk.NE, window=clear_route_b)
@@ -118,7 +118,7 @@ def set_sp_states():
         sp_1_state = MINUS
         sp_1_indicator = sp_1_open
     else:
-        messagebox.showerror("Failure", f"Invalid checkbox state for switchpoint 1")
+        messagebox.showerror("Failure", "Invalid checkbox state for switchpoint 1")
         return
 
     if sp_2_plus.get() == 1 and sp_2_minus.get() == 0:
@@ -128,7 +128,7 @@ def set_sp_states():
         sp_2_state = MINUS
         sp_2_indicator = sp_2_open
     else:
-        messagebox.showerror("Failure", f"Invalid checkbox state for switchpoint 2")
+        messagebox.showerror("Failure", "Invalid checkbox state for switchpoint 2")
         return
 
     if sp_1a_plus.get() == 1 and sp_1a_minus.get() == 0:
@@ -138,7 +138,7 @@ def set_sp_states():
         sp_1a_state = MINUS
         sp_1a_indicator = sp_1a_open
     else:
-        messagebox.showerror("Failure", f"Invalid checkbox state for switchpoint 1a")
+        messagebox.showerror("Failure", "Invalid checkbox state for switchpoint 1a")
         return
 
     if sp_2a_plus.get() == 1 and sp_2a_minus.get() == 0:
@@ -148,7 +148,7 @@ def set_sp_states():
         sp_2a_state = MINUS
         sp_2a_indicator = sp_2a_open
     else:
-        messagebox.showerror("Failure", f"Invalid checkbox state for switchpoint 2a")
+        messagebox.showerror("Failure", "Invalid checkbox state for switchpoint 2a")
         return
 
     # update switchpoint indicators
