@@ -1,3 +1,4 @@
+from time import sleep
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
@@ -40,6 +41,271 @@ route_entry_w = canvas.create_window(WIDTH-20, HEIGHT-120, anchor=tk.NE, window=
 cur_route_l = tk.Label(root, text="Current route: NONE")
 cur_route_w = canvas.create_window(1100, HEIGHT-160, anchor=tk.NE, window=cur_route_l)
 
+# set track lines
+track_kwargs = {
+    'width': 5,
+}
+
+tr_2v = canvas.create_line(45, 80,
+                           100, 80,
+                           fill='gray',
+                           **track_kwargs)
+
+tr_2b = canvas.create_line(100, 80,
+                           195, 80,
+                           fill='gray',
+                           **track_kwargs)
+
+tr_2a = canvas.create_line(195, 80,
+                           448, 80,
+                           fill='gray',
+                           **track_kwargs)
+
+tr_2c = canvas.create_line(448, 80,
+                           663, 80,
+                           fill='gray',
+                           **track_kwargs)
+
+tr_4 = canvas.create_line(663, 80,
+                          1185, 80,
+                          fill='gray',
+                          **track_kwargs)
+
+tr_1v = canvas.create_line(44, 134,
+                           100, 134,
+                           fill='gray',
+                           **track_kwargs)
+
+tr_1b = canvas.create_line(100, 134,
+                           164, 134,
+                           fill='gray',
+                           **track_kwargs)
+
+tr_1a = canvas.create_line(164, 134,
+                           292, 134,
+                           fill='gray',
+                           **track_kwargs)
+
+tr_1as = canvas.create_line(292, 134,
+                            460, 134,
+                            fill='gray',
+                            **track_kwargs)
+
+tr_1s = canvas.create_line(460, 134,
+                           664, 134,
+                           fill='gray',
+                           **track_kwargs)
+
+tr_1d = canvas.create_line(664, 134,
+                           1068, 134,
+                           fill='gray',
+                           **track_kwargs)
+
+tr_2d = canvas.create_line(1068, 134,
+                           1185, 134,
+                           fill='gray',
+                           **track_kwargs)
+
+track_sections = {
+    'tr_2v':  tr_2v,
+    'tr_2b':  tr_2b,
+    'tr_2a':  tr_2a,
+    'tr_2c':  tr_2c,
+    'tr_4':   tr_4,
+    'tr_1v':  tr_1v,
+    'tr_1b':  tr_1b,
+    'tr_1a':  tr_1a,
+    'tr_1as': tr_1as,
+    'tr_1s':  tr_1s,
+    'tr_1d':  tr_1d,
+    'tr_2d':  tr_2d
+}
+
+# set signals
+sg_A2_red_c = (225, 102)
+sg_A2_red = canvas.create_oval(sg_A2_red_c[0] - 9,
+                               sg_A2_red_c[1] - 9,
+                               sg_A2_red_c[0] + 9,
+                               sg_A2_red_c[1] + 9,
+                               fill='red')
+
+sg_A2_green_c = (243, 102)
+sg_A2_green = canvas.create_oval(sg_A2_green_c[0] - 9,
+                                 sg_A2_green_c[1] - 9,
+                                 sg_A2_green_c[0] + 9,
+                                 sg_A2_green_c[1] + 9,
+                                 fill='light gray')
+
+sg_E2_red_c = (414, 61)
+sg_E2_red = canvas.create_oval(sg_E2_red_c[0] - 9,
+                               sg_E2_red_c[1] - 9,
+                               sg_E2_red_c[0] + 9,
+                               sg_E2_red_c[1] + 9,
+                               fill='red')
+
+sg_E2_green_c = (396, 61)
+sg_E2_green = canvas.create_oval(sg_E2_green_c[0] - 9,
+                                 sg_E2_green_c[1] - 9,
+                                 sg_E2_green_c[0] + 9,
+                                 sg_E2_green_c[1] + 9,
+                                 fill='light gray')
+
+sg_A4_red_c = (479, 98)
+sg_A4_red = canvas.create_oval(sg_A4_red_c[0] - 9,
+                               sg_A4_red_c[1] - 9,
+                               sg_A4_red_c[0] + 9,
+                               sg_A4_red_c[1] + 9,
+                               fill='red')
+
+sg_A4_green_c = (497, 98)
+sg_A4_green = canvas.create_oval(sg_A4_green_c[0] - 9,
+                                 sg_A4_green_c[1] - 9,
+                                 sg_A4_green_c[0] + 9,
+                                 sg_A4_green_c[1] + 9,
+                                 fill='light gray')
+
+sg_E1_red_c = (631, 116)
+sg_E1_red = canvas.create_oval(sg_E1_red_c[0] - 9,
+                               sg_E1_red_c[1] - 9,
+                               sg_E1_red_c[0] + 9,
+                               sg_E1_red_c[1] + 9,
+                               fill='red')
+
+sg_E1_green_c = (613, 116)
+sg_E1_green = canvas.create_oval(sg_E1_green_c[0] - 9,
+                                 sg_E1_green_c[1] - 9,
+                                 sg_E1_green_c[0] + 9,
+                                 sg_E1_green_c[1] + 9,
+                                 fill='light gray')
+
+sg_A1_red_c = (195, 152)
+sg_A1_red = canvas.create_oval(sg_A1_red_c[0] - 9,
+                               sg_A1_red_c[1] - 9,
+                               sg_A1_red_c[0] + 9,
+                               sg_A1_red_c[1] + 9,
+                               fill='red')
+
+sg_A1_green_c = (213, 152)
+sg_A1_green = canvas.create_oval(sg_A1_green_c[0] - 9,
+                                 sg_A1_green_c[1] - 9,
+                                 sg_A1_green_c[0] + 9,
+                                 sg_A1_green_c[1] + 9,
+                                 fill='light gray')
+
+sg_A3_red_c = (491, 152)
+sg_A3_red = canvas.create_oval(sg_A3_red_c[0] - 9,
+                               sg_A3_red_c[1] - 9,
+                               sg_A3_red_c[0] + 9,
+                               sg_A3_red_c[1] + 9,
+                               fill='red')
+
+sg_A3_green_c = (509, 152)
+sg_A3_green = canvas.create_oval(sg_A3_green_c[0] - 9,
+                                 sg_A3_green_c[1] - 9,
+                                 sg_A3_green_c[0] + 9,
+                                 sg_A3_green_c[1] + 9,
+                                 fill='light gray')
+
+track_signals = {
+    'sg_A2_red':   sg_A2_red,
+    'sg_A2_green': sg_A2_green,
+    'sg_E2_red':   sg_E2_red,
+    'sg_E2_green': sg_E2_green,
+    'sg_A4_red':   sg_A4_red,
+    'sg_A4_green': sg_A4_green,
+    'sg_E1_red':   sg_E1_red,
+    'sg_E1_green': sg_E1_green,
+    'sg_A1_red':   sg_A1_red,
+    'sg_A1_green': sg_A1_green,
+    'sg_A3_red':   sg_A3_red,
+    'sg_A3_green': sg_A3_green
+}
+
+def simulate_route(route, can, sections, signals):
+    """
+    Simulate train movement on given route.
+    Assuming route is safe and valid.
+
+    """
+
+    section_time_coef = 10
+    route_sects = []
+    route_signals_red = []
+    route_signals_green = []
+
+    if route == 'A1 A3':
+        route_sects = ['tr_1a',
+                      'tr_1as']
+        route_signals_red = ['sg_A1_red',]
+        route_signals_green = ['sg_A1_green',]
+
+    elif route == 'A2 A3':
+        route_sects = ['tr_2a',
+                      'tr_1as']
+        route_signals_red = ['sg_A2_red',]
+        route_signals_green = ['sg_A2_green',]
+
+    elif route == 'A2 A4':
+        route_sects = ['tr_2a']
+        route_signals_red = ['sg_A2_red',]
+        route_signals_green = ['sg_A2_green',]
+
+    elif route == 'E1 z2':
+        route_sects = ['tr_1s',
+                      'tr_1as',
+                      'tr_2a',
+                      'tr_2b',
+                      'tr_2v']
+        route_signals_red = ['sg_E1_red',]
+        route_signals_green = ['sg_E1_green',]
+
+    elif route == 'E1 z1':
+        route_sects = ['tr_1s',
+                      'tr_1as',
+                      'tr_1a',
+                      'tr_1b',
+                      'tr_1v']
+        route_signals_red = ['sg_E1_red',]
+        route_signals_green = ['sg_E1_green',]
+
+    elif route == 'E2 z2':
+        route_sects = ['tr_2a',
+                      'tr_2b',
+                      'tr_2v']
+        route_signals_red = ['sg_E2_red',]
+        route_signals_green = ['sg_E2_green',]
+
+    for rs in route_sects:
+        can.itemconfig(sections[rs], fill='green')
+    
+    for sgg in route_signals_green:
+        can.itemconfig(signals[sgg], fill='green')
+    for sgr in route_signals_red:
+        can.itemconfig(signals[sgr], fill='light gray')
+    
+    for rs in route_sects:
+        print("Currently in section: {}".format(rs))
+        bounds = can.bbox(sections[rs])
+        section_length = bounds[2] - bounds[0]
+        can.itemconfig(sections[rs], fill='red')
+        print("length: {}".format(section_length))
+
+        wvar = tk.IntVar()
+        can.after(int(section_length * section_time_coef + 250),
+                  wvar.set, 1)
+        can.wait_variable(wvar)
+        
+        can.itemconfig(sections[rs], fill='green')
+
+    for rs in route_sects:
+        can.itemconfig(sections[rs], fill='gray')
+    
+    for sgg in route_signals_green:
+        can.itemconfig(signals[sgg], fill='light gray')
+    for sgr in route_signals_red:
+        can.itemconfig(signals[sgr], fill='red')
+        
+
 # set switchpoint indicators
 sp_1_open = ImageTk.PhotoImage(Image.open("sp_open.png").resize((40, 10), Image.ANTIALIAS).transpose(Image.FLIP_LEFT_RIGHT))
 sp_1_close = ImageTk.PhotoImage(Image.open("sp_close.png").resize((40, 10), Image.ANTIALIAS).transpose(Image.FLIP_LEFT_RIGHT))
@@ -67,19 +333,21 @@ sp_2a_i_w = canvas.create_window(286, 76, anchor=tk.NW, window=sp_2a_i_l)
 
 def set_route_clicked():
     route = route_entry.get()
-    print("set route <{route}>")
+    print("set route <{}>".format(route))
     if not route:
         return
     if len(route.split()) != 2 or route not in proc.elements[ROUTE]:
-        messagebox.showerror("Failure", "Invalid route <{route}>")
+        messagebox.showerror("Failure", "Invalid route <{}>".format(route))
     else:
         safe = proc.check_safety(ROUTE, route, SET)
         print(route, "is safe:", safe)
         if not safe:
-            messagebox.showerror("Failure", "Route <{route}> failed safety check")
+            messagebox.showerror("Failure", "Route <{}> failed safety check".format(route))
         else:
             proc.recv_message(message(ROUTE, route, SET))
-            cur_route_l.config(text="Current route: {proc.current_route}")
+            cur_route_l.config(text="Current route: {}".format(proc.current_route))
+            simulate_route(route, canvas, track_sections, track_signals)
+            clear_route_clicked()
 
 set_route_b = tk.Button(root, text="Set Route", command=set_route_clicked, width=22, height=1)
 set_route_w = canvas.create_window(WIDTH-20, HEIGHT-70, anchor=tk.NE, window=set_route_b)
