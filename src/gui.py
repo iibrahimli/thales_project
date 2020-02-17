@@ -221,6 +221,10 @@ track_signals = {
     'sg_A3_green': sg_A3_green
 }
 
+
+switchpoint_lock = False
+
+
 def simulate_route(route, can, sections, signals):
     """
     Simulate train movement on given route.
@@ -232,6 +236,7 @@ def simulate_route(route, can, sections, signals):
     route_sects = []
     route_signals_red = []
     route_signals_green = []
+    global switchpoint_lock
 
     if route == 'A1 A3':
         route_sects = ['tr_1a',
@@ -275,6 +280,8 @@ def simulate_route(route, can, sections, signals):
         route_signals_red = ['sg_E2_red',]
         route_signals_green = ['sg_E2_green',]
 
+    switchpoint_lock = True
+
     for rs in route_sects:
         can.itemconfig(sections[rs], fill='green')
     
@@ -288,7 +295,6 @@ def simulate_route(route, can, sections, signals):
         bounds = can.bbox(sections[rs])
         section_length = bounds[2] - bounds[0]
         can.itemconfig(sections[rs], fill='red')
-        print("length: {}".format(section_length))
 
         wvar = tk.IntVar()
         can.after(int(section_length * section_time_coef + 250),
@@ -304,6 +310,8 @@ def simulate_route(route, can, sections, signals):
         can.itemconfig(signals[sgg], fill='light gray')
     for sgr in route_signals_red:
         can.itemconfig(signals[sgr], fill='red')
+    
+    switchpoint_lock = False
         
 
 # set switchpoint indicators
@@ -379,6 +387,11 @@ sp_2a_plus  = tk.IntVar()
 sp_2a_minus = tk.IntVar()
 
 def set_sp_states():
+
+    if switchpoint_lock == True:
+        messagebox.showerror("Failure", "Switchpoint states cannot be set while a train is moving")
+        return
+
     if sp_1_plus.get() == 1 and sp_1_minus.get() == 0:
         sp_1_state = PLUS
         sp_1_indicator = sp_1_close
